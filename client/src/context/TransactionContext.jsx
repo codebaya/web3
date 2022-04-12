@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ethers, Ethers } from 'ethers';
+import { ethers } from 'ethers';
 
 import { contractABI, contractAddress } from '../utils/constants';
 
@@ -19,22 +19,22 @@ const getEthereumContract = () => {
 
 export const TransactionProvider = ({ children }) => {
 
-    const checkIfWalletIsConnected = async () => {
-        if(!ethereum) return alert("Please install metamask");
+    // const checkIfWalletIsConnected = async () => {
+    //     if(!ethereum) return alert("Please install metamask");
 
-        const accounts = await ethereum.request({ method: 'eth_accounts' });
-        console.log(accounts);
+    //     const accounts = await ethereum.request({ method: 'eth_accounts' });
+    //     console.log(accounts);
 
-    }
+    // }
 
-    useEffect(() => {
-        checkIfWalletIsConnected();
-    }, [])
+    // useEffect(() => {
+    //     checkIfWalletIsConnected();
+    // }, [])
 
 
 
     return (
-        <TransactionContext.Provider value={{value: 'test' }}>
+        <TransactionContext.Provider value={{value: 'test'}}>
             {children}
         </TransactionContext.Provider>
     );
