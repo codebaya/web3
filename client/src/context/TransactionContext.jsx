@@ -20,7 +20,11 @@ const getEthereumContract = () => {
 export const TransactionProvider = ({ children }) => {
 
     const [currentAccount, setCurrentAccount] = useState("");
+    const [formData, setFormData] = useState({ addressTo: "", amount: "", keyword: "", message: "" });
 
+    const handleChange = (e, name) => {
+        setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
+      }; ///hard to understand til i got to work on my own project
 
     const checkIfWalletIsConnected = async () => {
 
@@ -28,6 +32,8 @@ export const TransactionProvider = ({ children }) => {
             if(!ethereum) return alert("Please install metamask");
 
             const accounts = await ethereum.request({ method: 'eth_accounts' });
+
+            
 
             if(accounts.length) {
                 setCurrentAccount(accounts[0]);
@@ -58,6 +64,22 @@ export const TransactionProvider = ({ children }) => {
         }
     }
 
+    const sendTransaction = async () => {
+        try {
+            if(!ethereum) return alert("Please install metamask");
+
+
+            const { addressTo, amount, keyword, message } = formData;
+            getEthereumContract();
+
+            // get the data from the form!
+        } catch (error) {
+            console.log(error);
+
+            throw new Error("No ethereum object!");
+        }
+    }
+
     useEffect(() => {
         checkIfWalletIsConnected();
     }, []);
@@ -65,7 +87,7 @@ export const TransactionProvider = ({ children }) => {
 
 
     return (
-        <TransactionContext.Provider value={{ connectWallet, currentAccount }}>
+        <TransactionContext.Provider value={{ connectWallet, currentAccount, formData, setFormData, handleChange, sendTransaction }}>
             {children}
         </TransactionContext.Provider>
     );
